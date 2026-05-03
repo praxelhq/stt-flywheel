@@ -6,9 +6,10 @@ This repo holds everything reviewers need to verify the paper's numbers without 
 
 > **Paper.** arXiv preprint: *(URL pending arXiv submission; will be linked here on appearance.)*
 >
-> **Companion repos.**
-> - [`praxelhq/praxy-tts`](https://github.com/praxelhq/praxy-tts) — *private* — the TTS half of the flywheel (Praxy R6 LoRA training, Chatterbox / IndicF5 / commercial wrappers, Modal infra).
-> - [`praxelhq/psp-eval`](https://github.com/praxelhq/psp-eval) — *public* — the Phoneme Substitution Profile accent metric used in the companion Praxy Voice paper.
+> **Companion papers and repos.**
+> - Praxy Voice (TTS) — paper [arXiv:2604.25441](https://arxiv.org/abs/2604.25441); engineering tree in *private* [`praxelhq/praxy-tts`](https://github.com/praxelhq/praxy-tts); model on [`Praxel/praxy-voice-r6`](https://huggingface.co/Praxel/praxy-voice-r6); demo at [`Praxel/praxy-voice-demo`](https://huggingface.co/spaces/Praxel/praxy-voice-demo).
+> - PSP (accent metric) — paper [arXiv:2604.25476](https://arxiv.org/abs/2604.25476); public companion repo [`praxelhq/psp-eval`](https://github.com/praxelhq/psp-eval); centroids dataset [`Praxel/psp-native-centroids`](https://huggingface.co/datasets/Praxel/psp-native-centroids).
+> - LASE (cross-script speaker encoder) — public companion repo [`praxelhq/lase`](https://github.com/praxelhq/lase); weights [`Praxel/lase-r1`](https://huggingface.co/Praxel/lase-r1) (arXiv submission pending).
 
 ## Headline result
 
@@ -121,9 +122,8 @@ The trained LoRA adapters are released on HuggingFace under Apache-2.0:
 | [`Praxel/praxy-stt-te-rb`](https://huggingface.co/Praxel/praxy-stt-te-rb) | `vasista22/whisper-telugu-large-v2` | Telugu entity-dense (paper headline) |
 | [`Praxel/praxy-stt-hi-rb`](https://huggingface.co/Praxel/praxy-stt-hi-rb) | `vasista22/whisper-hindi-large-v2`  | Hindi entity-dense |
 | [`Praxel/praxy-stt-ta-rb`](https://huggingface.co/Praxel/praxy-stt-ta-rb) | `vasista22/whisper-tamil-large-v2`  | Tamil entity-dense |
-| [`Praxel/praxy-stt-te-r2`](https://huggingface.co/Praxel/praxy-stt-te-r2) | `openai/whisper-large-v3`            | Telugu Script-Fidelity-Rate fix |
-| [`Praxel/praxy-stt-hi-r2`](https://huggingface.co/Praxel/praxy-stt-hi-r2) | `openai/whisper-large-v3`            | Hindi (SFR analysis) |
-| [`Praxel/praxy-stt-ta-r2`](https://huggingface.co/Praxel/praxy-stt-ta-r2) | `openai/whisper-large-v3`            | Tamil (SFR analysis) |
+
+The Whisper-v3 base `*-r2` adapters used in the Script Fidelity Rate analysis (paper §5.3) are not redistributed; their training recipe is fully specified in the paper and is reproducible from public Whisper-v3 weights and the released EDSA corpus text in this repo.
 
 Inference snippet:
 

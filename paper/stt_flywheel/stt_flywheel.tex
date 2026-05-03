@@ -1,6 +1,6 @@
 % STT Flywheel: TTS-Synthesised Entity-Dense Audio for Indic ASR Where Open and Commercial Systems Fail
 % Target: arXiv eess.AS / cs.CL + EMNLP industry / Interspeech 2027.
-% Companion to: arXiv:2604.25441 (Praxy Voice TTS), arXiv:2604.25476 (PSP).
+% Companion to: arXiv:2604.25441 (Praxy Voice TTS), arXiv:2604.25476 (PSP), and LASE (github.com/praxelhq/lase, arXiv pending).
 
 \documentclass[conference,a4paper]{IEEEtran}
 \IEEEoverridecommandlockouts
@@ -80,7 +80,7 @@ To our knowledge, no prior published work demonstrates a TTS-flywheel adaptation
 A companion benchmark on Pashto~\cite{pashto_benchmark_2026} reports zero-shot ASR, script-failure, and cross-domain evaluation patterns that align with the Indic regressions we observe.
 
 \textbf{Companion work.}
-This paper is the third in a series. The TTS-half of our flywheel is the open-source Praxy Voice~\cite{praxy_voice_2026} (arXiv:2604.25441); the per-phoneme accent metric used to validate synth quality is PSP~\cite{psp_2026} (arXiv:2604.25476).
+Companion papers from the same project line: the open-source Praxy Voice cross-script Indic TTS~\cite{praxy_voice_2026} (arXiv:2604.25441), which provides the TTS half of our flywheel; the Phoneme Substitution Profile (PSP)~\cite{psp_2026} (arXiv:2604.25476), an automatic accent metric for Indic TTS; and LASE~\cite{lase_2026}, a language-adversarial speaker encoder for cross-script identity preservation. None of these systems is required to use or re-implement the EDSA pipeline reported here; this paper uses Praxy Voice (alongside vanilla Chatterbox, IndicF5, ElevenLabs, and Cartesia) as one of several TTS backends in the multi-system synthesis routing of \S\ref{sec:flywheel}.
 
 \section{Method}\label{sec:method}
 
@@ -180,8 +180,6 @@ Three real-recording holdouts plus one synthesised entity-dense holdout:
 \end{enumerate}
 
 \section{Results}\label{sec:results}
-
-% TODO: Tables 1-4.
 
 \subsection{Headline: entity-dense recognition}
 
@@ -434,7 +432,7 @@ The per-language LoRA recipe in §\ref{sec:lora} delivers a $\sim 30$ pp absolut
 
 \textbf{Predictions.} \texttt{evaluation/\allowbreak scorecards/\allowbreak stt\_flywheel/} contains the per-utterance hypothesis JSONL from every system reported in this paper, allowing third-party re-scoring against alternative metrics.
 
-\textbf{Model weights.} The vasista22-base entity-dense LoRA adapters are released live on HuggingFace under Apache-2.0: \url{https://huggingface.co/Praxel/praxy-stt-te-rb}, \url{https://huggingface.co/Praxel/praxy-stt-hi-rb}, and \url{https://huggingface.co/Praxel/praxy-stt-ta-rb}. The Whisper-v3-base language-conditional adapters (\texttt{Praxel/praxy-stt-\{te,ta,hi\}-r2}) are released alongside under the same license. The vasista22 base remains under its upstream Apache-2.0 license; we redistribute only LoRA adapter weights.
+\textbf{Model weights.} The vasista22-base entity-dense LoRA adapters are released live on HuggingFace under Apache-2.0: \url{https://huggingface.co/Praxel/praxy-stt-te-rb}, \url{https://huggingface.co/Praxel/praxy-stt-hi-rb}, and \url{https://huggingface.co/Praxel/praxy-stt-ta-rb}. The vasista22 base remains under its upstream Apache-2.0 license; we redistribute only LoRA adapter weights. The Whisper-v3-base language-conditional adapters (Praxy-STT-r2) used in the Script Fidelity Rate analysis (\S\ref{sec:lang_conditional}) are not redistributed; their training recipe is fully specified in \S\ref{sec:lora} and is reproducible from public Whisper-v3 weights and the released EDSA corpus text.
 
 \textbf{Cost transparency.} Real audited spend at submission time: Anthropic Haiku-4.5 (entity-text generation) \$$13.95$; Modal A10G/A100 (corpus synth + 3 r2 LoRAs + 3 rb LoRAs + eval matrix) \$$\sim 130$; Deepgram Nova-3 (commercial baseline, paid via existing credit pool) \$$\sim 5$; ElevenLabs and Cartesia synth (free credits). Total real spend reported in this paper: $\sim$\$$241$. EDSA entity dictionaries are released under CC-BY-4.0.
 
