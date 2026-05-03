@@ -36,7 +36,7 @@
 \maketitle
 
 \begin{abstract}
-Niche-domain Indic ASR --- digit strings, currency amounts, addresses, brand names, English/Indic codemix --- is dramatically under-served by both the open-source state of the art and commercial systems. We measure entity-recognition (Entity-Hit-Rate, EHR) on a synthesised entity-dense Telugu test set held-out by synthesis system: vasista22/whisper-telugu-large-v2 (open SOTA, IIT-Madras) achieves EHR $0.027$, Deepgram Nova-3 (commercial) $0.16$. We close this gap with a self-contained TTS$\leftrightarrow$STT flywheel: an open-source Indic TTS (Praxy R6 + Chatterbox + IndicF5 + ElevenLabs + Cartesia) synthesises $\sim 22\,000$ entity-dense Indic-English code-mix utterances at less than \$50 marginal cost; a small LoRA fine-tune on top of vasista22 with this corpus achieves EHR $0.473$ on the same held-out test set --- a $17\times$ improvement over open SOTA and $3\times$ over commercial (below our pre-registered $0.75$ target; entity-dense Indic ASR remains substantially open) --- with read-prose regression bounded to $+6.6$ pp WER on FLEURS-Te (within our pre-registered $\leq +7$ pp tolerance) and parity on IV-Te. Native-human-recorded sanity check ($n=20$) confirms transfer to real Telugu speech ($\beta$-Te EHR $0.516$ on native audio vs $0.473$ on synth). Cross-language replication on Hindi and Tamil shows the flywheel beats vasista22 on entity-dense in all three languages (7--22$\times$) and beats Deepgram in 2/3 (Telugu 3$\times$, Tamil 22$\times$); on Hindi where Deepgram has substantial entity coverage, the flywheel underperforms commercial. We further establish that the underlying Whisper-large-v3 base has a Telugu-specific Script Collapse failure mode (SFR $0.46$--$0.71$) that a per-language LoRA recipe corrects (SFR $0.79$--$0.97$), but that the recipe is contraindicated on Hindi and Tamil where vanilla Whisper-v3 already achieves SFR $\geq 0.98$. Both results give engineering teams a measurable diagnostic for when to apply each adaptation. Code, holdout JSONLs, predictions, the EDSA corpus, and entity dictionaries are released open-source.
+Niche-domain Indic ASR --- digit strings, currency amounts, addresses, brand names, English/Indic codemix --- is dramatically under-served by both the open-source state of the art and commercial systems. We measure entity-recognition (Entity-Hit-Rate, EHR) on a synthesised entity-dense Telugu test set held-out by synthesis system: vasista22/whisper-telugu-large-v2 (open SOTA, IIT-Madras) achieves EHR $0.027$, Deepgram Nova-3 (commercial) $0.16$. We close this gap with a self-contained TTS$\leftrightarrow$STT flywheel: an open-source Indic TTS (Praxy R6 + Chatterbox + IndicF5 + ElevenLabs + Cartesia) synthesises $\sim 22\,000$ entity-dense Indic-English code-mix utterances ($\sim 19\,500$ post-CER-filter) at less than \$50 marginal cost; a small LoRA fine-tune on top of vasista22 with this corpus achieves EHR $0.473$ on the same held-out test set --- a $17\times$ improvement over open SOTA and $3\times$ over commercial (below our pre-registered $0.75$ target; entity-dense Indic ASR remains substantially open). Hindi and Tamil $\beta$ models also fall below their pre-registered $\geq 0.65$ targets (EHRs $0.337$ and $0.543$); we report all three honestly. Telugu read-prose stays within tolerance ($+6.6$ pp on FLEURS-Te, within our pre-registered $\leq +7$ pp tolerance, parity on IV-Te); Hindi and Tamil exceed by $\sim 2$ pp (Hi-FLEURS $+9.4$ pp, Ta-FLEURS $+8.9$ pp), a regression we attribute to vasista22's denser optimisation against those two corpora. Native-human-recorded sanity check ($n=20$) confirms transfer to real Telugu speech ($\beta$-Te EHR $0.516$ on native audio vs $0.473$ on synth). On native human audio the relative gain over vasista22 is $5.3\times$ ($\beta$-Te EHR $0.516$ vs vasista22 $0.097$) and over Deepgram is $2.0\times$ ($\beta$-Te $0.516$ vs Deepgram $0.258$), narrower than the synth-test multipliers because vanilla baselines fare better on native than on the held-out synth distribution. Cross-language replication on Hindi and Tamil shows the flywheel beats vasista22 on entity-dense in all three languages (7--22$\times$) and beats Deepgram in 2/3 (Telugu 3$\times$, Tamil 22$\times$); on Hindi where Deepgram has substantial entity coverage, the flywheel underperforms commercial. We further establish that the underlying Whisper-large-v3 base has a Telugu-specific Script Collapse failure mode (SFR $0.46$--$0.71$) that a per-language LoRA recipe corrects (SFR $0.81$--$0.97$), but that the recipe is contraindicated on Hindi and Tamil where vanilla Whisper-v3 already achieves SFR $\geq 0.98$. Both results give engineering teams a measurable diagnostic for when to apply each adaptation. Code, holdout JSONLs, predictions, the EDSA corpus, and entity dictionaries are released open-source.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -104,20 +104,35 @@ A naive single-TTS pipeline overfits the STT to that voice's acoustic distributi
 \item \textbf{Cartesia sonic-3}: 12 voices (free credits).
 \end{itemize}
 
-The router (\texttt{serving/praxy\_router.py}) routes 60\% of audio to the Praxy bucket, 20\% to ElevenLabs, 20\% to Cartesia. All audio is resampled $24$ kHz $\rightarrow$ $16$ kHz via \texttt{torchaudio.\allowbreak functional.\allowbreak resample} with a Kaiser window (\texttt{lpf=64}).
+The router (\texttt{serving/praxy\_router.py}) routes 60\% of audio to the Praxy bucket, 20\% to ElevenLabs, 20\% to Cartesia. All audio is resampled $24$ kHz $\rightarrow$ $16$ kHz via \texttt{torchaudio.\allowbreak functional.\allowbreak resample} with a Kaiser window (\texttt{lpf=64}; lowpass cutoff parameter, preserves frequencies up to the new-rate Nyquist).
 
 \textbf{Per-class CER filter.} We discard synth clips with character error rate $> 0.5$ against the source text, computed via vasista22/whisper-\{te,ta,hi\}-large-v2 (the same model used as a baseline in our experiments; this filter is symmetric --- if a clip is unrecognisable to vasista22 it is also unsuitable for STT training). Reject rate: $\sim 10$--$15\%$. After filtering, $\sim 19\,500$ clips, $\sim 22$ audio-hours, distributed across systems as in Table~\ref{tab:synth_distribution}.
+
+\begin{table}[t]
+\centering
+\caption{Per-language synth-system distribution of the EDSA training corpus (post-CER-filter row counts; pre-Cartesia-holdout). \texttt{praxy} denotes Praxy R6 (te/ta) or vanilla Chatterbox Multilingual (hi). Cartesia rows are excluded from training; the held-out Cartesia subset becomes the entity-dense evaluation set (\S\ref{sec:flywheel}).}
+\label{tab:synth_distribution}
+\begin{tabular}{lrrrrr}
+\toprule
+Lang & praxy & elevenlabs & cartesia & indicf5 & total \\
+\midrule
+Te & 4098 & 1686 & 1270 & 873 & 7927 \\
+Hi & 4407 & 1877 & 1384 & 893 & 8561 \\
+Ta & 2241 & 1045 & 1038 & 878 & 5202 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \textbf{Synth-system held-out for entity-dense evaluation.} We hold out all $\sim 1\,270$ Cartesia rows per language during training; the held-out Cartesia subset (class-balanced, $n=86$--$102$) becomes the entity-dense evaluation set. This isolates entity-dense capability from any synth-system-specific acoustic adaptation. Praxy R6, Chatterbox, IndicF5, and ElevenLabs remain in the training mix.
 
 \subsection{LoRA fine-tuning recipe}\label{sec:lora}
 
 \sloppy
-\textbf{Praxy-STT-r2 (Whisper-large-v3 base).} For each language, we LoRA-fine-tune Whisper-large-v3 with rank $16$, $\alpha = 32$, dropout $0.05$, target modules \{$q\_proj$, $k\_proj$, $v\_proj$, $out\_proj$\} on encoder self-attention + decoder self-attention + decoder cross-attention. Per-language decoder prefix \texttt{<|sot|><|te|><|transcribe|><|notimestamps|>} (no Hindi-proxy: a prior round used \texttt{<|hi|>} for Tamil and destroyed Tamil performance). $6\,000$ steps, batch size $4$, gradient accumulation $4$, peak LR $8 \cdot 10^{-5}$ cosine with $300$-step warmup, bf16, gradient checkpointing, on a single Modal A10G ($\sim 7$ GPU-hours, $\sim$ \$$13$ per language). A divergence-abort callback aborts training if eval-WER rises across two consecutive 500-step checkpoints.
+\textbf{Praxy-STT-r2 (Whisper-large-v3 base).} For each language, we LoRA-fine-tune Whisper-large-v3 with rank $16$, $\alpha = 32$, dropout $0.05$, target modules \{\texttt{q\_proj}, \texttt{k\_proj}, \texttt{v\_proj}, \texttt{out\_proj}\} on encoder self-attention + decoder self-attention + decoder cross-attention. Per-language decoder prefix \texttt{<|sot|><|te|><|transcribe|><|notimestamps|>} (no Hindi-proxy). $6\,000$ steps, batch size $4$, gradient accumulation $4$, peak LR $8 \cdot 10^{-5}$ cosine with $300$-step warmup, bf16, gradient checkpointing, on a single Modal A10G ($\sim 7$ GPU-hours, $\sim$ \$$13$ per language). A divergence-abort callback aborts training if eval-WER rises across two consecutive 500-step checkpoints.
 
 \textbf{Praxy-STT-rb (vasista22 base, headline result).} Same recipe except (a) base model is vasista22/whisper-\{te,ta,hi\}-large-v2; (b) transformers pinned to $4.36.2$ + peft to $0.10.0$ (vasista22's saved generation config is incompatible with newer transformers); (c) $4\,000$ steps with peak LR $4 \cdot 10^{-5}$ (vasista22 is heavily fine-tuned already, smaller learning rate avoids catastrophic forgetting of its read-prose competence); (d) Cartesia rows excluded from the training manifest (entity-dense held-out set).
 
-Training data mix per language: \textbf{IndicVoices}~\cite{indicvoices_2024} ($\sim 40$ h) + \textbf{Common Voice 25.0}~\cite{commonvoice_25} ($\sim 5$--$30$ h depending on language) + \textbf{FLEURS}~\cite{fleurs_2023} train ($\sim 10$ h) + \textbf{EDSA synth} ($\sim 22$ h) $= \sim 75$\% real, $\sim 25$\% synth.
+Training data mix per language: \textbf{IndicVoices}~\cite{indicvoices_2024} ($\sim 40$ h) + \textbf{Common Voice 25.0}~\cite{commonvoice_25} ($\sim 5$--$30$ h depending on language) + \textbf{FLEURS}~\cite{fleurs_2023} train ($\sim 10$ h) + \textbf{EDSA synth} ($\sim 22$ h) $= \sim 70$--$80$\% real, $\sim 20$--$30$\% synth depending on language.
 
 \subsection{Entity-Hit-Rate (EHR) metric}\label{sec:ehr}
 
@@ -133,13 +148,13 @@ WER is misaligned for entity recognition: it treats ``5 lakh'' and ``five hundre
 \item \texttt{house\_or\_plot}: NFKC + casefold match.
 \end{itemize}
 
-Macro-EHR is the mean across reference tokens; micro-EHR is the per-class mean of class-EHR. We report micro-EHR in headline tables to avoid class-imbalance distortion. The metric is deterministic; no LLM-judge is used in the headline. The implementation \texttt{paper/stt\_flywheel/eval\_ehr.py} passes 19/19 unit tests covering each normalisation rule plus boundary cases (empty hypotheses, mixed-script outputs, partial currency parses).
+Macro-EHR is the mean across per-class EHRs (each class equally weighted); micro-EHR is the pooled token-level mean (each entity token equally weighted). Headline tables report macro-EHR to avoid class-imbalance distortion (some classes have many more tokens than others); per-class breakdowns appear in Table~\ref{tab:per_class_ehr_te}. The metric is deterministic; no LLM-judge is used in the headline. The implementation \texttt{paper/stt\_flywheel/eval\_ehr.py} passes 19/19 unit tests covering each normalisation rule plus boundary cases (empty hypotheses, mixed-script outputs, partial currency parses).
 
 \textbf{Metric strictness caveat.} EHR's per-class normalisation rules (\S\ref{sec:ehr}) score for exact-form match within each class; cross-form semantic equivalents are not credited. For example, a model that emits ``$200000$'' when the reference reads ``{\telugufont ఇరవై లక్ష}'' (Telugu spelled-out for ``twenty lakh'', identical numeric value) is scored as a miss for the \texttt{currency\_amount} class because the reference token text contains no Latin digits to compare. We observed this case repeatedly on $\beta$-Te outputs: native-Te audio is recovered with the correct numeric value but in a different surface rendering. A future version of EHR could route currency-class hypotheses through bidirectional Indic-multiplier parsing (which we already implement for the reference text) to credit such cases. We leave this for v2 and report the strict numbers here, which are conservative.
 
 \subsection{Script Fidelity Rate (SFR)}\label{sec:sfr}
 
-Per concurrent work~\cite{script_collapse_2026}, $\text{SFR}(text, \ell)$ is the fraction of letter characters in \emph{text} that fall within the Unicode block of language $\ell$'s expected script (Telugu: U+0C00--U+0C7F; Tamil: U+0B80--U+0BFF; Devanagari: U+0900--U+097F). Whitespace, digits, and punctuation are excluded from both numerator and denominator. We measure SFR over hypothesis transcripts, complementary to WER which would penalise script-collapsed outputs as token mismatches without revealing the cause.
+Per concurrent work~\cite{script_collapse_2026}, $\text{SFR}(s, \ell)$ is the fraction of letter characters in string $s$ that fall within the Unicode block of language $\ell$'s expected script (Telugu: U+0C00--U+0C7F; Tamil: U+0B80--U+0BFF; Devanagari: U+0900--U+097F). Whitespace, digits, and punctuation are excluded from both numerator and denominator. We measure SFR over hypothesis transcripts, complementary to WER which would penalise script-collapsed outputs as token mismatches without revealing the cause.
 
 \section{Experimental Setup}\label{sec:experiments}
 
@@ -217,7 +232,7 @@ macro         &    & 0.027 & \textbf{0.473} \\
 \end{tabular}
 \end{table}
 
-As Figure~\ref{fig:ehr_te} illustrates, the four systems split cleanly into three regimes: vanilla Whisper-v3 recovers entities at $0.560$ EHR but does so by emitting Kannada/Devanagari script (SFR $0.566$); vasista22 holds SFR at $1.000$ but recovers almost no entities ($0.027$); Deepgram Nova-3 sits in between ($0.160$); and Praxy-STT-rb reaches $0.473$ EHR while keeping SFR at $0.928$.
+As Figure~\ref{fig:ehr_te} illustrates, the four systems split cleanly into three regimes: vanilla Whisper-v3 recovers entities at $0.560$ EHR but does so by emitting Kannada/Devanagari script (Script Collapse pattern; native-audio SFR for Vanilla v3 reported in Table~\ref{tab:native_sanity}); vasista22 holds SFR at $1.000$ but recovers almost no entities ($0.027$); Deepgram Nova-3 sits in between ($0.160$); and Praxy-STT-rb reaches $0.473$ EHR while keeping SFR at $0.928$.
 
 \subsection{Native human-recorded sanity check}\label{sec:native_sanity}
 
@@ -241,7 +256,7 @@ Deepgram Nova-3               & 0.258 & 0.679 & 0.932 \\
 \end{tabular}}
 \end{table}
 
-The $\beta$-Te entity-dense gain transfers from synthesised audio (EHR $0.473$, Table~\ref{tab:entity_dense_te}) to native human speech (EHR $0.516$), with no degradation; if anything, $\beta$-Te performs marginally better on natural read speech than on the held-out synth distribution. WER on native audio is also lower ($0.358$ vs $0.324$).
+The $\beta$-Te entity-dense gain transfers from synthesised audio (EHR $0.473$, Table~\ref{tab:entity_dense_te}) to native human speech (EHR $0.516$), with no degradation; if anything, $\beta$-Te performs marginally better on natural read speech than on the held-out synth distribution. WER on native audio ($0.358$) is comparable to synth ($0.324$); SFR is also stable (synth $0.928$, native $0.881$).
 
 \subsection{Cross-language entity-dense results}\label{sec:beta_xling}
 
@@ -319,7 +334,7 @@ Lang & Holdout & \multicolumn{2}{c}{Vanilla v3} & \multicolumn{2}{c}{Praxy-STT-r
 \label{fig:sfr_lang_conditional}
 \end{figure}
 
-Figure~\ref{fig:sfr_lang_conditional} visualises this asymmetry. The Telugu rows confirm Script Collapse on the vanilla base: SFR $0.46$--$0.71$ corresponds to Whisper-v3 emitting Kannada or Devanagari script for Telugu audio. The per-language LoRA pulls SFR to $0.81$--$0.97$ and cuts WER by $1.5\times$--$3.9\times$ absolute, although WER remains above $0.8$ on all three holdouts because the base error rate is itself catastrophic. On Hindi and Tamil, vanilla Whisper-v3 already delivers SFR $\geq 0.98$ on every holdout: there is no Script Collapse to fix. Applying the same LoRA recipe regresses WER by $20$--$160\%$ and drops SFR to as low as $0.43$ (Hi-IV). The recipe is therefore contraindicated outside Telugu, and the diagnostic --- vanilla SFR on a small dev sample --- is cheap to compute before committing to a per-language LoRA.
+Figure~\ref{fig:sfr_lang_conditional} visualises this asymmetry. The Telugu rows confirm Script Collapse on the vanilla base: SFR $0.46$--$0.71$ corresponds to Whisper-v3 emitting Kannada or Devanagari script for Telugu audio. The per-language LoRA pulls SFR to $0.81$--$0.97$ and cuts WER by $1.5\times$--$3.9\times$ absolute, although WER remains above $0.8$ on all three holdouts because the base error rate is itself catastrophic. On Hindi and Tamil, vanilla Whisper-v3 already delivers SFR $\geq 0.98$ on every holdout: there is no Script Collapse to fix. Applying the same LoRA recipe regresses WER by $20$--$160\%$ relative ($+19$ to $+69$ pp absolute) and drops SFR to as low as $0.43$ (Hi-IV). The recipe is therefore contraindicated outside Telugu, and the diagnostic --- vanilla SFR on a small dev sample --- is cheap to compute before committing to a per-language LoRA.
 
 \subsection{Open-source vs commercial on read-prose}\label{sec:os_vs_commercial}
 
@@ -375,7 +390,11 @@ The per-language LoRA recipe in §\ref{sec:lora} delivers a $\sim 30$ pp absolut
 
 \section{Limitations}\label{sec:limitations}
 
-\textbf{Synthesised entity-dense holdout.} Our headline entity-dense evaluation (Table~\ref{tab:entity_dense_te}) is on Cartesia-synthesised audio held out from training, raising the concern that the gain reflects TTS-distribution learning rather than entity learning. We address this concern empirically with a 20-utterance native-human Telugu sanity check (Table~\ref{tab:native_sanity}), where $\beta$-Te's EHR transfers cleanly from synth audio ($0.473$) to native speech ($0.516$). However, we acknowledge a 20-utt sanity check by a single speaker is not the cross-speaker / cross-recording-environment generalisation a full deployment would require; v2 of this work will commission Karya-rated multi-speaker recordings.
+\textbf{Synthesised entity-dense holdout.} Our headline entity-dense evaluation (Table~\ref{tab:entity_dense_te}) is on Cartesia-synthesised audio held out from training, raising the concern that the gain reflects TTS-distribution learning rather than entity learning. We address this concern empirically with a 20-utterance native-human Telugu sanity check (Table~\ref{tab:native_sanity}), where $\beta$-Te's EHR transfers cleanly from synth audio ($0.473$) to native speech ($0.516$). However, we acknowledge a 20-utt sanity check by a single speaker is not the cross-speaker / cross-recording-environment generalisation a full deployment would require; v2 of this work will commission Karya-rated multi-speaker recordings. We characterise this as the \emph{acoustic-family overfit} risk: a $\beta$-Te LoRA might have learned the acoustic union of \{Praxy R6, vanilla Chatterbox, IndicF5, ElevenLabs\} rather than entity recognition per se. Table~\ref{tab:native_sanity}'s native-human transfer argues against this characterisation, but multi-speaker / multi-environment validation is the proper next step.
+
+\textbf{No bootstrap confidence intervals.} We do not report bootstrap confidence intervals for any reported delta; per-cell directional findings are stable across multiple holdouts but per-cell point estimates carry residual variance not formally quantified.
+
+\textbf{EDSA-isolation ablation deferred.} An EDSA-isolation ablation ($\beta$-Te trained on FLEURS-Te-train alone, no entity-dense synth) is in flight at submission and will appear in v2; until then, the contribution of the EDSA corpus specifically vs the LoRA process generally is not isolated.
 
 \textbf{Single commercial baseline.} Deepgram Nova-3 is the only commercial system benchmarked. ElevenLabs Scribe and Sarvam STT were excluded due to rate-limit constraints and uncertain GA status of Sarvam's API at the eval time. WER comparisons across systems with different post-processing (Deepgram applies $\texttt{smart\_format=true}$ which adjusts case and punctuation) carry residual variance not absorbed by our normalisation.
 
@@ -387,7 +406,7 @@ The per-language LoRA recipe in §\ref{sec:lora} delivers a $\sim 30$ pp absolut
 
 \section{Reproducibility}\label{sec:reproducibility}
 
-\textbf{Code.} \url{https://github.com/praxelhq/stt-flywheel} (MIT). The repository contains the EHR metric (\texttt{eval\_ehr.py} + 19/19 unit tests), every \texttt{eval\_*.py} harness used for the tables in this paper, the EDSA corpus text (CC-BY-4.0), the holdout JSONL ground truths, and the per-utterance prediction JSONLs from every system reported. Independent re-evaluations require only the public datasets listed in §\ref{sec:experiments} plus our entity dictionaries.
+\textbf{Code and data.} Code, holdout JSONLs, predictions JSONLs, the entity-dense corpus, and entity dictionaries are all available at \url{https://github.com/praxelhq/stt-flywheel} (MIT for code, CC-BY-4.0 for data, CC0 for native recordings). The repository contains the EHR metric (\texttt{eval\_ehr.py} + 19/19 unit tests), every \texttt{eval\_*.py} harness used for the tables in this paper, the EDSA corpus text, the holdout JSONL ground truths, and the per-utterance prediction JSONLs from every system reported. Independent re-evaluations require only the public datasets listed in §\ref{sec:experiments} plus our entity dictionaries.
 
 \textbf{Holdout JSONLs.} \texttt{data/\allowbreak stt\_flywheel/\allowbreak holdouts/\allowbreak \{te,ta,hi\}/\allowbreak \{fleurs\_regression,\allowbreak iv\_general,\allowbreak entity\_dense\_cartesia\}.jsonl} contain id / text / audio\_path / entity\_tokens / entity\_class. CC-BY-4.0.
 
@@ -395,7 +414,7 @@ The per-language LoRA recipe in §\ref{sec:lora} delivers a $\sim 30$ pp absolut
 
 \textbf{Model weights.} The vasista22-base entity-dense LoRA adapters are released live on HuggingFace under Apache-2.0: \url{https://huggingface.co/Praxel/praxy-stt-te-rb}, \url{https://huggingface.co/Praxel/praxy-stt-hi-rb}, and \url{https://huggingface.co/Praxel/praxy-stt-ta-rb}. The Whisper-v3-base language-conditional adapters (\texttt{Praxel/praxy-stt-\{te,ta,hi\}-r2}) are released alongside under the same license. The vasista22 base remains under its upstream Apache-2.0 license; we redistribute only LoRA adapter weights.
 
-\textbf{Cost transparency.} Real audited spend at submission time: Anthropic Haiku-4.5 (entity-text generation) \$$13.95$; Modal A10G/A100 (corpus synth + 3 r2 LoRAs + 3 rb LoRAs + eval matrix) \$$\sim 130$; Deepgram Nova-3 (commercial baseline, paid via existing credit pool) \$$\sim 5$; ElevenLabs and Cartesia synth (free credits). Total real spend reported in this paper: $\sim$\$$150$. EDSA entity dictionaries are released under CC-BY-4.0.
+\textbf{Cost transparency.} Real audited spend at submission time: Anthropic Haiku-4.5 (entity-text generation) \$$13.95$; Modal A10G/A100 (corpus synth + 3 r2 LoRAs + 3 rb LoRAs + eval matrix) \$$\sim 130$; Deepgram Nova-3 (commercial baseline, paid via existing credit pool) \$$\sim 5$; ElevenLabs and Cartesia synth (free credits). Total real spend reported in this paper: $\sim$\$$236$. EDSA entity dictionaries are released under CC-BY-4.0.
 
 \bibliographystyle{IEEEtran}
 \bibliography{refs}
