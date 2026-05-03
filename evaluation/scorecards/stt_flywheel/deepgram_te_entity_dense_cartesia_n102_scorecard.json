@@ -1,0 +1,9 @@
+{
+  "system": "deepgram_nova_3",
+  "n": 102,
+  "ehr": 0.16,
+  "sfr_mean": 0.9776,
+  "wer": 0.6902,
+  "cer": 0.4078,
+  "holdout": "entity_dense_cartesia_te_test"
+}

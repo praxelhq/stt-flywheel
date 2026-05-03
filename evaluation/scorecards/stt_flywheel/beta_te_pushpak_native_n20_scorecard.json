@@ -1,0 +1,41 @@
+{
+  "n": 20,
+  "ehr": 0.5161,
+  "sfr_mean": 0.8806,
+  "by_class": {
+    "brands": {
+      "hits": 1,
+      "total": 4,
+      "ehr": 0.25
+    },
+    "addresses": {
+      "hits": 4,
+      "total": 5,
+      "ehr": 0.8
+    },
+    "currency": {
+      "hits": 0,
+      "total": 3,
+      "ehr": 0.0
+    },
+    "codemix": {
+      "hits": 11,
+      "total": 19,
+      "ehr": 0.5789
+    },
+    "digits": {
+      "hits": 0,
+      "total": 0,
+      "ehr": 0.0
+    },
+    "proper_nouns": {
+      "hits": 0,
+      "total": 0,
+      "ehr": 0.0
+    }
+  },
+  "wer": 0.3582,
+  "cer": 0.1587,
+  "holdout": "pushpak_native",
+  "lora_ckpt": "/cache/stt_rb/te/rb/checkpoint-4000"
+}

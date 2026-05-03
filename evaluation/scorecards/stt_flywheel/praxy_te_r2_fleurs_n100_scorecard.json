@@ -1,0 +1,33 @@
+{
+  "vanilla_whisper_v3": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.701,
+    "by_class": {
+      "general": {
+        "hits": 0,
+        "total": 0,
+        "ehr": 0.0
+      }
+    },
+    "wer": 1.5027,
+    "cer": 0.8136
+  },
+  "praxy_te_r2": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.9694,
+    "by_class": {
+      "general": {
+        "hits": 0,
+        "total": 0,
+        "ehr": 0.0
+      }
+    },
+    "wer": 0.8293,
+    "cer": 0.4635
+  },
+  "n_rows": 100,
+  "holdout": "fleurs_te_in_test",
+  "lora_ckpt": "/cache/stt_r2/te/r2/checkpoint-6000"
+}

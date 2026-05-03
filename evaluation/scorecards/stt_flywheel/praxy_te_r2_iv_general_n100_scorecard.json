@@ -1,0 +1,19 @@
+{
+  "vanilla_whisper_v3": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.7116,
+    "wer": 1.4359,
+    "cer": 0.9221
+  },
+  "praxy_te_r2": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.8065,
+    "wer": 0.9894,
+    "cer": 0.6312
+  },
+  "n_rows": 100,
+  "holdout": "iv_general",
+  "num_beams": 1
+}

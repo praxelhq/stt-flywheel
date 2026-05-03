@@ -1,0 +1,119 @@
+{"brand": "Swiggy", "category": "food delivery"}
+{"brand": "Zomato", "category": "food delivery"}
+{"brand": "Flipkart", "category": "ecommerce"}
+{"brand": "Amazon", "category": "ecommerce"}
+{"brand": "Myntra", "category": "fashion"}
+{"brand": "Paytm", "category": "payments"}
+{"brand": "PhonePe", "category": "payments"}
+{"brand": "Google Pay", "category": "payments"}
+{"brand": "BHIM UPI", "category": "payments"}
+{"brand": "HDFC Bank", "category": "banking"}
+{"brand": "ICICI Bank", "category": "banking"}
+{"brand": "SBI", "category": "banking"}
+{"brand": "Axis Bank", "category": "banking"}
+{"brand": "Kotak", "category": "banking"}
+{"brand": "Indian Bank", "category": "banking"}
+{"brand": "Tata Motors", "category": "automotive"}
+{"brand": "Maruti Suzuki", "category": "automotive"}
+{"brand": "Mahindra", "category": "automotive"}
+{"brand": "Royal Enfield", "category": "automotive"}
+{"brand": "Bajaj", "category": "automotive"}
+{"brand": "Hero MotoCorp", "category": "automotive"}
+{"brand": "Ola", "category": "transport"}
+{"brand": "Uber", "category": "transport"}
+{"brand": "Rapido", "category": "transport"}
+{"brand": "BluSmart", "category": "transport"}
+{"brand": "IRCTC", "category": "transport"}
+{"brand": "MakeMyTrip", "category": "travel"}
+{"brand": "Goibibo", "category": "travel"}
+{"brand": "ixigo", "category": "travel"}
+{"brand": "EaseMyTrip", "category": "travel"}
+{"brand": "WhatsApp", "category": "messaging"}
+{"brand": "Telegram", "category": "messaging"}
+{"brand": "Signal", "category": "messaging"}
+{"brand": "Facebook", "category": "social"}
+{"brand": "Instagram", "category": "social"}
+{"brand": "Twitter", "category": "social"}
+{"brand": "LinkedIn", "category": "social"}
+{"brand": "YouTube", "category": "media"}
+{"brand": "Hotstar", "category": "streaming"}
+{"brand": "JioCinema", "category": "streaming"}
+{"brand": "Netflix", "category": "streaming"}
+{"brand": "Prime Video", "category": "streaming"}
+{"brand": "Sun NXT", "category": "streaming"}
+{"brand": "Aha Tamil", "category": "streaming"}
+{"brand": "ZEE5", "category": "streaming"}
+{"brand": "Spotify", "category": "music"}
+{"brand": "JioSaavn", "category": "music"}
+{"brand": "Gaana", "category": "music"}
+{"brand": "Wynk Music", "category": "music"}
+{"brand": "Apple Music", "category": "music"}
+{"brand": "Boat", "category": "consumer electronics"}
+{"brand": "Mi", "category": "consumer electronics"}
+{"brand": "OnePlus", "category": "consumer electronics"}
+{"brand": "Samsung", "category": "consumer electronics"}
+{"brand": "OPPO", "category": "consumer electronics"}
+{"brand": "Vivo", "category": "consumer electronics"}
+{"brand": "Realme", "category": "consumer electronics"}
+{"brand": "Nothing", "category": "consumer electronics"}
+{"brand": "Apple", "category": "consumer electronics"}
+{"brand": "Nykaa", "category": "beauty"}
+{"brand": "Mamaearth", "category": "beauty"}
+{"brand": "BlueDart", "category": "logistics"}
+{"brand": "Delhivery", "category": "logistics"}
+{"brand": "Ekart", "category": "logistics"}
+{"brand": "Dunzo", "category": "logistics"}
+{"brand": "BigBasket", "category": "groceries"}
+{"brand": "Zepto", "category": "groceries"}
+{"brand": "Blinkit", "category": "groceries"}
+{"brand": "Swiggy Instamart", "category": "groceries"}
+{"brand": "Reliance Smart", "category": "groceries"}
+{"brand": "DMart", "category": "groceries"}
+{"brand": "More Supermarket", "category": "groceries"}
+{"brand": "Saravana Stores", "category": "retail"}
+{"brand": "Pothys", "category": "retail"}
+{"brand": "RmKV", "category": "retail"}
+{"brand": "Naidu Hall", "category": "retail"}
+{"brand": "GRT Jewellers", "category": "jewellery"}
+{"brand": "Lalithaa Jewellery", "category": "jewellery"}
+{"brand": "Tanishq", "category": "jewellery"}
+{"brand": "PC Jeweller", "category": "jewellery"}
+{"brand": "Joyalukkas", "category": "jewellery"}
+{"brand": "Dr Reddys", "category": "pharma"}
+{"brand": "Cipla", "category": "pharma"}
+{"brand": "Sun Pharma", "category": "pharma"}
+{"brand": "Apollo Pharmacy", "category": "pharmacy"}
+{"brand": "MedPlus", "category": "pharmacy"}
+{"brand": "1mg", "category": "pharmacy"}
+{"brand": "PharmEasy", "category": "pharmacy"}
+{"brand": "Practo", "category": "healthcare"}
+{"brand": "Apollo Hospitals", "category": "healthcare"}
+{"brand": "Fortis", "category": "healthcare"}
+{"brand": "Manipal Hospitals", "category": "healthcare"}
+{"brand": "Acko", "category": "insurance"}
+{"brand": "PolicyBazaar", "category": "insurance"}
+{"brand": "Star Health", "category": "insurance"}
+{"brand": "BYJUS", "category": "edtech"}
+{"brand": "Unacademy", "category": "edtech"}
+{"brand": "Vedantu", "category": "edtech"}
+{"brand": "PhysicsWallah", "category": "edtech"}
+{"brand": "Toppr", "category": "edtech"}
+{"brand": "Razorpay", "category": "fintech"}
+{"brand": "Cred", "category": "fintech"}
+{"brand": "Groww", "category": "investments"}
+{"brand": "Zerodha", "category": "investments"}
+{"brand": "Upstox", "category": "investments"}
+{"brand": "Smallcase", "category": "investments"}
+{"brand": "Slice", "category": "fintech"}
+{"brand": "Fi Money", "category": "fintech"}
+{"brand": "Niyo", "category": "fintech"}
+{"brand": "Jio", "category": "telecom"}
+{"brand": "Airtel", "category": "telecom"}
+{"brand": "Vi", "category": "telecom"}
+{"brand": "BSNL", "category": "telecom"}
+{"brand": "ACT Fibernet", "category": "internet"}
+{"brand": "JioFiber", "category": "internet"}
+{"brand": "Hathway", "category": "internet"}
+{"brand": "Tata Sky", "category": "DTH"}
+{"brand": "Sun Direct", "category": "DTH"}
+{"brand": "Dish TV", "category": "DTH"}

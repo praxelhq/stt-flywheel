@@ -1,0 +1,9 @@
+{
+  "system": "deepgram_nova_3",
+  "n": 3326,
+  "ehr": 0.0,
+  "sfr_mean": 0.8332,
+  "wer": 0.3629,
+  "cer": 0.2026,
+  "holdout": "cv25_hi_test"
+}

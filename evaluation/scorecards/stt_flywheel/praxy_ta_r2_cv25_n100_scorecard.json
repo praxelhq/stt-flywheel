@@ -1,0 +1,18 @@
+{
+  "vanilla_whisper_v3": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.9979,
+    "wer": 0.669,
+    "cer": 0.1817
+  },
+  "praxy_ta_r2": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.8533,
+    "wer": 0.885,
+    "cer": 0.3532
+  },
+  "holdout": "cv25",
+  "lora_ckpt": "/cache/stt_r2/ta/r2/checkpoint-6000"
+}

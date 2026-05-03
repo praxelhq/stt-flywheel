@@ -1,0 +1,41 @@
+{
+  "n": 86,
+  "ehr": 0.0491,
+  "sfr_mean": 1.0,
+  "by_class": {
+    "proper_nouns": {
+      "hits": 0,
+      "total": 1,
+      "ehr": 0.0
+    },
+    "currency": {
+      "hits": 6,
+      "total": 15,
+      "ehr": 0.4
+    },
+    "codemix": {
+      "hits": 0,
+      "total": 128,
+      "ehr": 0.0
+    },
+    "digits": {
+      "hits": 0,
+      "total": 0,
+      "ehr": 0.0
+    },
+    "brands": {
+      "hits": 2,
+      "total": 17,
+      "ehr": 0.1176
+    },
+    "addresses": {
+      "hits": 0,
+      "total": 2,
+      "ehr": 0.0
+    }
+  },
+  "wer": 0.5036,
+  "cer": 0.3882,
+  "holdout": "entity_dense_cartesia",
+  "model": "vasista22/whisper-hindi-large-v2"
+}

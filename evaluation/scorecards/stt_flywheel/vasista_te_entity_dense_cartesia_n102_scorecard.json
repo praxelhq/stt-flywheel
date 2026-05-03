@@ -1,0 +1,41 @@
+{
+  "n": 102,
+  "ehr": 0.0267,
+  "sfr_mean": 1.0,
+  "by_class": {
+    "addresses": {
+      "hits": 0,
+      "total": 28,
+      "ehr": 0.0
+    },
+    "proper_nouns": {
+      "hits": 0,
+      "total": 0,
+      "ehr": 0.0
+    },
+    "currency": {
+      "hits": 0,
+      "total": 12,
+      "ehr": 0.0
+    },
+    "digits": {
+      "hits": 0,
+      "total": 0,
+      "ehr": 0.0
+    },
+    "codemix": {
+      "hits": 0,
+      "total": 93,
+      "ehr": 0.0
+    },
+    "brands": {
+      "hits": 4,
+      "total": 17,
+      "ehr": 0.2353
+    }
+  },
+  "wer": 0.5815,
+  "cer": 0.3883,
+  "holdout": "entity_dense_cartesia",
+  "model": "vasista22/whisper-telugu-large-v2"
+}

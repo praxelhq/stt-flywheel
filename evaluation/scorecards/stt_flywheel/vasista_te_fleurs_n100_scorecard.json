@@ -1,0 +1,8 @@
+{
+  "n": 100,
+  "sfr_mean": 0.9958,
+  "wer": 0.329,
+  "cer": 0.0934,
+  "holdout": "fleurs_te",
+  "model": "vasista22/whisper-telugu-large-v2"
+}

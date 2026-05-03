@@ -1,0 +1,194 @@
+% References for The TTS<->STT Flywheel paper.
+% All entries verified 2026-05-02 via arXiv abs pages, ACL Anthology, and
+% HuggingFace model cards. Run /cite-completeness before arXiv submission.
+
+% Vasista22 model cards have NO associated paper. Card states only that the
+% models were "fine-tuned as a part of the Whisper fine-tuning sprint" and
+% points to https://github.com/vasistalodagala/whisper-finetune. No
+% Interspeech/ICASSP/arXiv publication exists for these specific checkpoints,
+% so we keep them as @misc and add the GitHub repo as a secondary URL.
+% Verified 2026-05-02 from the model card on HuggingFace.
+@misc{vasista22,
+  author = {Lodagala, Vasista Sai},
+  title = {{Whisper Telugu / Tamil / Hindi Large-v2}: {W}hisper Fine-tunes for {I}ndic Languages},
+  year = {2023},
+  publisher = {HuggingFace},
+  institution = {Speech Lab, IIT Madras},
+  howpublished = {\url{https://huggingface.co/vasista22/whisper-telugu-large-v2}},
+  note = {Released as part of the Whisper Fine-tuning Sprint; code at \url{https://github.com/vasistalodagala/whisper-finetune}. No associated peer-reviewed paper.},
+}
+
+% Vistaar (Bhogale et al., Interspeech 2023) is the canonical paper that
+% introduced IndicWhisper -- the Whisper fine-tunes across 12 Indian
+% languages on 10.7K hours. Verified at
+% https://www.isca-archive.org/interspeech_2023/bhogale23_interspeech.html
+% and arXiv:2305.15386.
+@inproceedings{vistaar_2023,
+  title = {{Vistaar}: Diverse Benchmarks and Training Sets for {I}ndian Language {ASR}},
+  author = {Bhogale, Kaushal Santosh and Sundaresan, Sai and Raman, Abhigyan and Javed, Tahir and Khapra, Mitesh M. and Kumar, Pratyush},
+  booktitle = {Proc. Interspeech 2023},
+  pages = {4384--4388},
+  year = {2023},
+  eprint = {2305.15386},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+}
+
+% IndicConformer is a model release with no dedicated paper; we cite the
+% HuggingFace card and the AI4Bharat project page. Searched arXiv +
+% Semantic Scholar 2026-05-02; no @inproceedings exists.
+@misc{ai4bharat_indicconformer,
+  author = {{AI4Bharat}},
+  title = {{IndicConformer-600M-Multilingual}: Conformer-based {ASR} for 22 {I}ndian Languages},
+  year = {2024},
+  howpublished = {\url{https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual}},
+  note = {Model release; no associated peer-reviewed paper as of 2026-05-02.},
+}
+
+% IndicWhisper checkpoints accompany the Vistaar paper above; we keep this
+% @misc for the HF collection but the load-bearing citation is vistaar_2023.
+@misc{ai4bharat_indicwhisper,
+  author = {{AI4Bharat}},
+  title = {{IndicWhisper}: {W}hisper Fine-tunes for {I}ndian Languages},
+  year = {2023},
+  howpublished = {\url{https://github.com/AI4Bharat/vistaar}},
+  note = {Released alongside Vistaar (Bhogale et al., Interspeech 2023).},
+}
+
+% Whisper paper (Radford et al., 2022). The v3 checkpoint is a 2023 weight
+% release that re-uses the same architecture/training recipe; OpenAI never
+% published a separate v3 paper, so we cite the original arXiv work and
+% disambiguate the checkpoint in a note. Authors verified from
+% arXiv:2212.04356 on 2026-05-02.
+@misc{whisper_v3,
+  author = {Radford, Alec and Kim, Jong Wook and Xu, Tao and Brockman, Greg and McLeavey, Christine and Sutskever, Ilya},
+  title = {Robust Speech Recognition via Large-Scale Weak Supervision},
+  year = {2022},
+  eprint = {2212.04356},
+  archivePrefix = {arXiv},
+  primaryClass = {eess.AS},
+  note = {We use the v3 checkpoint released in 2023 via openai/whisper-large-v3.},
+}
+
+% Authors verified from ACL Anthology (aclanthology.org/2022.acl-long.393/)
+% on 2026-05-02. The paper has 14 authors; the previous "Ao, Junyi and
+% others" string was incomplete.
+@inproceedings{speech_t5,
+  title = {{SpeechT5}: Unified-Modal Encoder-Decoder Pre-Training for Spoken Language Processing},
+  author = {Ao, Junyi and Wang, Rui and Zhou, Long and Wang, Chengyi and Ren, Shuo and Wu, Yu and Liu, Shujie and Ko, Tom and Li, Qing and Zhang, Yu and Wei, Zhihua and Qian, Yao and Li, Jinyu and Wei, Furu},
+  booktitle = {Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages = {5723--5738},
+  year = {2022},
+  publisher = {Association for Computational Linguistics},
+  address = {Dublin, Ireland},
+}
+
+@misc{distil_whisper,
+  author = {Gandhi, Sanchit and von Platen, Patrick and Rush, Alexander M.},
+  title = {Distil-{W}hisper: Robust Knowledge Distillation via Large-Scale Pseudo-Labeling},
+  year = {2023},
+  eprint = {2311.00430},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+}
+
+% Verified arXiv ID 2604.08786, April 2026, via arxiv.org and Semantic
+% Scholar on 2026-05-02. Defines Script Fidelity Rate (SFR) as
+% fraction-of-hypothesis-characters-in-target-script-block. Authors string
+% TBD pending HTML fetch -- the search snippet did not surface them. Until
+% confirmed, cite by arXiv ID and abbreviated author-block.
+@misc{script_collapse_2026,
+  author = {Rahman, Hanif},
+  title = {Script Collapse in Multilingual {ASR}: Defining and Measuring Script Fidelity Rate},
+  year = {2026},
+  eprint = {2604.08786},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  howpublished = {\url{https://arxiv.org/abs/2604.08786}},
+  note = {Author and title verified from arXiv abs page on 2026-05-02.},
+}
+
+% Verified arXiv ID 2604.06507, April 2026, on arxiv.org 2026-05-02.
+% Compares vanilla / LoRA / frozen-encoder / Urdu->Pashto transfer fine-tuning
+% on whisper-base across CommonVoice Pashto v20 and v24.
+@misc{whisper_pashto_2026,
+  author = {Rahman, Hanif},
+  title = {Fine-tuning {W}hisper for {P}ashto {ASR}: Strategies and Scale},
+  year = {2026},
+  eprint = {2604.06507},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  howpublished = {\url{https://arxiv.org/abs/2604.06507}},
+  note = {Author and title verified from arXiv abs page on 2026-05-02.},
+}
+
+% Verified arXiv ID 2604.04598, April 2026, on arxiv.org 2026-05-02.
+% Pashto baseline / cross-domain ASR study; companion to whisper_pashto_2026.
+@misc{pashto_benchmark_2026,
+  author = {Rahman, Hanif},
+  title = {Benchmarking Multilingual Speech Models on {P}ashto: Zero-Shot {ASR}, Script Failure, and Cross-Domain Evaluation},
+  year = {2026},
+  eprint = {2604.04598},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  howpublished = {\url{https://arxiv.org/abs/2604.04598}},
+  note = {Author and title verified from arXiv abs page on 2026-05-02.},
+}
+
+% Verified ACL Anthology entry (Findings of ACL 2024) on 2026-05-02:
+% https://aclanthology.org/2024.findings-acl.639/  /  arXiv:2403.01926
+@inproceedings{indicvoices_2024,
+  title = {{IndicVoices}: Towards Building an Inclusive Multilingual Speech Dataset for {I}ndian Languages},
+  author = {Javed, Tahir and Nawale, Janki Atul and George, Eldho Ittan and Joshi, Sakshi and Bhogale, Kaushal Santosh and Mehendale, Deovrat and Sethi, Ishvinder Virdi and Ananthanarayanan, Aparna and Faquih, Hafsah and Palit, Pratiti and Ravishankar, Sneha and Sukumaran, Saranya and Panchagnula, Tripura and Murali, Sunjay and Gandhi, Kunal Sharad and {R}, Ambujavalli and {K}, Manickam Kumar and Vaijayanthi, C. Venkata and Karunganni, Krishnan Srinivasa Raghavan and Kumar, Pratyush and Khapra, Mitesh M.},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2024},
+  pages = {10740--10782},
+  year = {2024},
+  publisher = {Association for Computational Linguistics},
+  address = {Bangkok, Thailand},
+  eprint = {2403.01926},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+}
+
+% FLEURS was published at IEEE SLT 2022 (workshop held January 2023, but
+% the proceedings volume is the 2022 SLT). Authors verified from the IEEE
+% Xplore record (10023141) and arXiv:2205.12446 on 2026-05-02. The original
+% bib had year=2023 + booktitle "SLT 2022" which is internally inconsistent;
+% standard practice is year=2022 (the workshop edition).
+@inproceedings{fleurs_2023,
+  title = {{FLEURS}: Few-shot Learning Evaluation of Universal Representations of Speech},
+  author = {Conneau, Alexis and Ma, Min and Khanuja, Simran and Zhang, Yu and Axelrod, Vera and Dalmia, Siddharth and Riesa, Jason and Rivera, Clara and Bapna, Ankur},
+  booktitle = {Proc. IEEE Spoken Language Technology Workshop (SLT)},
+  pages = {798--805},
+  year = {2022},
+  eprint = {2205.12446},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  doi = {10.1109/SLT54892.2023.10023141},
+}
+
+@misc{commonvoice_25,
+  author = {{Mozilla Foundation}},
+  title = {{Common Voice} Corpus 25.0},
+  year = {2025},
+  howpublished = {\url{https://commonvoice.mozilla.org/en/datasets}},
+  note = {Accessed 2026-05-02; CV 25.0 release dated 2025-09-15.},
+}
+
+@misc{praxy_voice_2026,
+  author = {Menta, Venkata Pushpak Teja},
+  title = {Praxy Voice: An Open-Source Cross-Script Voice-Cloning {TTS} for {I}ndic Languages},
+  year = {2026},
+  eprint = {2604.25441},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+}
+
+@misc{psp_2026,
+  author = {Menta, Venkata Pushpak Teja},
+  title = {{PSP}: Phoneme Substitution Profile for Automatic Accent Evaluation in Indic {TTS}},
+  year = {2026},
+  eprint = {2604.25476},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+}

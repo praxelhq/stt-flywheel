@@ -1,0 +1,18 @@
+{
+  "vanilla_whisper_v3": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.9826,
+    "wer": 0.321,
+    "cer": 0.1159
+  },
+  "praxy_hi_r2": {
+    "n": 100,
+    "ehr": 0.0,
+    "sfr_mean": 0.8799,
+    "wer": 0.5123,
+    "cer": 0.3494
+  },
+  "holdout": "fleurs",
+  "lora_ckpt": "/cache/stt_r2/hi/r2/checkpoint-6000"
+}

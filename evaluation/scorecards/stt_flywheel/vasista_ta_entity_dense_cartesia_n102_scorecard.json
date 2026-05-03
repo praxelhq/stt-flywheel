@@ -1,0 +1,41 @@
+{
+  "n": 102,
+  "ehr": 0.0254,
+  "sfr_mean": 1.0,
+  "by_class": {
+    "brands": {
+      "hits": 5,
+      "total": 17,
+      "ehr": 0.2941
+    },
+    "currency": {
+      "hits": 0,
+      "total": 9,
+      "ehr": 0.0
+    },
+    "proper_nouns": {
+      "hits": 0,
+      "total": 12,
+      "ehr": 0.0
+    },
+    "addresses": {
+      "hits": 0,
+      "total": 30,
+      "ehr": 0.0
+    },
+    "digits": {
+      "hits": 0,
+      "total": 15,
+      "ehr": 0.0
+    },
+    "codemix": {
+      "hits": 0,
+      "total": 114,
+      "ehr": 0.0
+    }
+  },
+  "wer": 0.8336,
+  "cer": 0.699,
+  "holdout": "entity_dense_cartesia",
+  "model": "vasista22/whisper-tamil-large-v2"
+}

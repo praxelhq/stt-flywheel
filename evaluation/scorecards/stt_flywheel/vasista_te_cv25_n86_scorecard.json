@@ -1,0 +1,8 @@
+{
+  "n": 86,
+  "sfr_mean": 1.0,
+  "wer": 0.4833,
+  "cer": 0.0954,
+  "holdout": "cv25_te",
+  "model": "vasista22/whisper-telugu-large-v2"
+}

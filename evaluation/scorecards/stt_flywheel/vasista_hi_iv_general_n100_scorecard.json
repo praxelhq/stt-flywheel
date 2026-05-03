@@ -1,0 +1,8 @@
+{
+  "n": 100,
+  "sfr_mean": 1.0,
+  "wer": 0.4387,
+  "cer": 0.3036,
+  "holdout": "iv_general_hi",
+  "model": "vasista22/whisper-hindi-large-v2"
+}

@@ -1,0 +1,87 @@
+{
+  "lang": "te",
+  "lora_ckpt": "/cache/stt_rb/te/rb/checkpoint-4000",
+  "by_holdout": {
+    "entity_dense_cartesia": {
+      "n": 102,
+      "ehr": 0.4733,
+      "sfr_mean": 0.9284,
+      "by_class": {
+        "addresses": {
+          "hits": 22,
+          "total": 28,
+          "ehr": 0.7857
+        },
+        "proper_nouns": {
+          "hits": 0,
+          "total": 0,
+          "ehr": 0.0
+        },
+        "currency": {
+          "hits": 6,
+          "total": 12,
+          "ehr": 0.5
+        },
+        "digits": {
+          "hits": 0,
+          "total": 0,
+          "ehr": 0.0
+        },
+        "codemix": {
+          "hits": 34,
+          "total": 93,
+          "ehr": 0.3656
+        },
+        "brands": {
+          "hits": 9,
+          "total": 17,
+          "ehr": 0.5294
+        }
+      },
+      "wer": 0.3245,
+      "cer": 0.1858
+    },
+    "fleurs": {
+      "n": 100,
+      "ehr": 0.0,
+      "sfr_mean": 0.9571,
+      "by_class": {
+        "general": {
+          "hits": 0,
+          "total": 0,
+          "ehr": 0.0
+        }
+      },
+      "wer": 0.3946,
+      "cer": 0.136
+    },
+    "cv25": {
+      "n": 86,
+      "ehr": 0.0,
+      "sfr_mean": 1.0,
+      "by_class": {
+        "general": {
+          "hits": 0,
+          "total": 0,
+          "ehr": 0.0
+        }
+      },
+      "wer": 0.4954,
+      "cer": 0.095
+    },
+    "iv_general": {
+      "n": 100,
+      "ehr": 0.0,
+      "sfr_mean": 0.9942,
+      "by_class": {
+        "general": {
+          "hits": 0,
+          "total": 0,
+          "ehr": 0.0
+        }
+      },
+      "wer": 0.4221,
+      "cer": 0.158
+    }
+  }
+}
