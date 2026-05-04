@@ -76,8 +76,6 @@ To our knowledge, no prior published work demonstrates a TTS-flywheel adaptation
 
 \textbf{Concurrent work.}
 \emph{Script Collapse in Multilingual ASR}~\cite{script_collapse_2026} formalised the failure mode where Whisper outputs Telugu in Kannada script and defined the Script Fidelity Rate (SFR). We adopt SFR as a secondary primary metric and present the first cross-system SFR measurements on real Indic audio (\S\ref{sec:results}).
-\emph{Fine-tuning Whisper for Pashto ASR}~\cite{whisper_pashto_2026} validates the LoRA-adapt-Whisper approach for a different low-resource language; we extend the adaptation target to entity-dense recognition.
-A companion benchmark on Pashto~\cite{pashto_benchmark_2026} reports zero-shot ASR, script-failure, and cross-domain evaluation patterns that align with the Indic regressions we observe.
 
 \textbf{Companion work.}
 Companion papers from the same project line: the open-source Praxy Voice cross-script Indic TTS~\cite{praxy_voice_2026} (arXiv:2604.25441), which provides the TTS half of our flywheel; the Phoneme Substitution Profile (PSP)~\cite{psp_2026} (arXiv:2604.25476), an automatic accent metric for Indic TTS; and LASE~\cite{lase_2026} (arXiv:2605.00777), a language-adversarial speaker encoder for cross-script identity preservation. None of these systems is required to use or re-implement the EDSA pipeline reported here; this paper uses Praxy Voice (alongside vanilla Chatterbox, IndicF5, ElevenLabs, and Cartesia) as one of several TTS backends in the multi-system synthesis routing of \S\ref{sec:flywheel}.
